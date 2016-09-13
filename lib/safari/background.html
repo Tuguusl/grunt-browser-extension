@@ -1,8 +1,11 @@
 {{#if homepage_url}}
 <script>
 // Default callback for homepageRedirect
-function homepageRedirec(){
-    safari.application.activeBrowserWindow.activeTab.url = "{{homepage_url}}";
+function homepageRedirec(url){
+    if(!url){
+        url = "{{homepage_url}}";
+    }
+    safari.application.activeBrowserWindow.activeTab.url = url;
 }
 </script>
 {{/if}}
