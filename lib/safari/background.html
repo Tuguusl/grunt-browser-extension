@@ -1,16 +1,17 @@
+{{#if homepage_url}}
+<script>
+// Default callback for homepageRedirect
+function homepageRedirec(){
+    safari.application.activeBrowserWindow.activeTab.url = "{{homepage_url}}";
+}
+</script>
+{{/if}}
 {{#each background.scripts}}
 <script src="{{this}}">
 </script>
 {{/each}}
 <script>
-{{#if homepage_url}}
-// Default callback for homepageRedirect
-function homepageRedirec(){
-    safari.application.activeBrowserWindow.activeTab.url = "{{homepage_url}}";
-}
-{{/if}}
 {{#if page_action}}
-
 // Page action button
 safari.application.addEventListener("command", function(event){
     if(event.command == "{{page_action.callback}}"){
