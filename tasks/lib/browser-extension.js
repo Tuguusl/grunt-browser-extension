@@ -109,7 +109,7 @@ browserExtension.prototype.copyBrowserFiles = function() {
             // Check if scripts inbackground exists in file system else remove for not render in manifiest
             if(context.background && context.background.scripts && context.background.scripts.length > 0){
                 var background_scripts_checked = [];
-                for(var counter=0; counter < context.background.scripts; counter+=1){
+                for(var counter=0; counter < context.background.scripts.length; counter+=1){
                     var background_script = context.background.scripts[counter];
                     if(grunt.file.isFile(path.join(options.directory, browser, background_script))){
                         background_scripts_checked.push(background_script);
