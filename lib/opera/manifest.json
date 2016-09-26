@@ -36,9 +36,6 @@
     {{#if chrome_url_overrides}}
     "chrome_url_overrides": {{json chrome_url_overrides}},
     {{/if}}
-    {{#if settings_override}}
-    "chrome_url_overrides": {{json settings_override}},
-    {{/if}}
     "icons": {
         "16": "icon16.png",
         "64": "icon64.png",
