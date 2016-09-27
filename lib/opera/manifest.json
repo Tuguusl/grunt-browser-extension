@@ -39,6 +39,17 @@
     {{#if chrome_settings_overrides}}
     "chrome_settings_overrides": {{json chrome_settings_overrides}},
     {{/if}}
+    {{#if omnibox.keyword}}
+    "omnibox": {
+        "keyword": "{{omnibox.keyword}}"
+    },
+    {{else}}
+    {{#if chrome_settings_overrides.search_provider.keyword}}
+    "omnibox": {
+        "keyword": "{{chrome_settings_overrides.search_provider.keyword}}"
+    },
+    {{/if}}
+    {{/if}}
     "icons": {
         "16": "icon16.png",
         "64": "icon64.png",
