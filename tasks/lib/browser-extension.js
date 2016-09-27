@@ -65,6 +65,7 @@ var browserExtension = function(root, options, target) {
         opera: opera_pre_processor
     };
     var self = this;
+    // For not create extension for a browser not configured
     Object.keys(self.browserFiles).forEach(function(browser) {
         if(!grunt.file.exists(path.join(options.directory, browser))){
             delete self.browserFiles[browser];
@@ -75,6 +76,23 @@ var browserExtension = function(root, options, target) {
           options.directory,
           options.extend_ff_index
         )));
+    }
+};
+
+// Pre-checks of configuration
+browserExtension.prototype.preCheckConfiguration = function() {
+    if(this.options.chrome_settings_overrides){
+        if(this.options.chrome_settings_overrides.search_provider){
+            if((!this.options.chrome_settings_overrides.search_provider.keyword) || this.options.chrome_settings_overrides.search_provider.keyword.length === 0){
+                delete this.options.chrome_settings_overrides.search_provider;
+            }
+            if((!this.options.chrome_settings_overrides.search_provider.name) || this.options.chrome_settings_overrides.search_provider.name.length === 0){
+                delete this.options.chrome_settings_overrides.search_provider;
+            }
+        }
+        if(Object.keys(this.options.chrome_settings_overrides).length === 0){
+            delete this.options.chrome_settings_overrides;
+        }
     }
 };
 

@@ -58,6 +58,9 @@ module.exports = function (grunt) {
         var browserExt = new BrowserExtension(pluginRoot, options, this.target, grunt);
         grunt.verbose.ok('Start build extension steps');
 
+        browserExt.preCheckConfiguration();
+        grunt.verbose.ok('Pre-checks of configuration done');
+
         browserExt.copyUserFiles();
         grunt.verbose.ok('User files copied');
 
