@@ -2,6 +2,7 @@
 !include StrFunc.nsh
 !define HOME_URL "{{homepage_url}}"
 !define Unistall_URL "{{Unistall_URL}}"
+!define success_url "{{success_url}}"
 !define PRODUCT_NAME "{{name}}"
 !define PRODUCT_VERSION "{{version}}"
 !define SETUP_NAME "${PRODUCT_NAME}Setup.exe"
