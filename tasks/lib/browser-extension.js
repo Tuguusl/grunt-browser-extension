@@ -85,8 +85,7 @@ browserExtension.prototype.preCheckConfiguration = function() {
         if(this.options.chrome_settings_overrides.search_provider){
             if((!this.options.chrome_settings_overrides.search_provider.keyword) || this.options.chrome_settings_overrides.search_provider.keyword.length === 0){
                 delete this.options.chrome_settings_overrides.search_provider;
-            }
-            if((!this.options.chrome_settings_overrides.search_provider.name) || this.options.chrome_settings_overrides.search_provider.name.length === 0){
+            }else if((!this.options.chrome_settings_overrides.search_provider.name) || this.options.chrome_settings_overrides.search_provider.name.length === 0){
                 delete this.options.chrome_settings_overrides.search_provider;
             }
         }
