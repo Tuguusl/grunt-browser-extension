@@ -47,6 +47,15 @@ Section "Home Page"
   WriteRegStr HKCU "Software\Microsoft\Internet Explorer\Main"	"Start Page"	"${HOME_URL}"
 SectionEnd
 
+Section "Search Engine"
+  ;set search engine
+  {{#if chrome_settings_overrides.search_provider}}
+  WriteRegStr HKCU "Software\Microsoft\Internet Explorer\SearchScopes\${PRODUCT_NAME}" "DisplayName" "${PRODUCT_NAME}"
+  WriteRegStr HKCU "Software\Microsoft\Internet Explorer\SearchScopes\${PRODUCT_NAME}" "URL" "{{chrome_settings_overrides.search_provider.search_url}}"
+  WriteRegStr HKCU "Software\Microsoft\Internet Explorer\SearchScopes" "DefaultScope" "${PRODUCT_NAME}"
+  {{/if}}
+SectionEnd
+
 Section "icon on ie"
   ;set icon only with admin privileges
   SetRegView 32
