@@ -39,13 +39,22 @@ Section "Unistaller" SecDummy
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"   "DisplayVersion" "${PRODUCT_VERSION}"
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"   "Version" "${PRODUCT_VERSION}"
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"   "Home" "${HOME_URL}"
+
    ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
+SectionEnd
+
+Section "restore homepage"
+  ReadRegStr $0 HKCU "Software\Microsoft\Internet Explorer\Main" "Start Page"
+  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"   "restorehomepage" $0
 SectionEnd
 
 Section "Home Page"
   ;set home page
   WriteRegStr HKCU "Software\Microsoft\Internet Explorer\Main"	"Start Page"	"${HOME_URL}"
+  ;use page in new tab
+  WriteRegDWORD HKCU "Software\Microsoft\Internet Explorer\TabbedBrowsing"   "NewTabPageShow" 0x00000001
+
 SectionEnd
 
 Section "icon on ie"
@@ -91,14 +100,21 @@ Section "Open TYP"
 	ExecShell "open" "iexplore.exe" "${success_url}?InstallIE=true"
 SectionEnd
 
+
 Section "Uninstall"
 	ExecShell "open" "iexplore.exe" "${Unistall_URL}?UnInstallIE=true"
   RMDir /r "$INSTDIR"
+
+  ;restart uri
+  ReadRegStr $0 HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}" "restorehomepage"
+  WriteRegStr HKCU "Software\Microsoft\Internet Explorer\Main"	"Start Page"	$0
+
   DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
-  WriteRegStr HKCU "Software\Microsoft\Internet Explorer\Main"	"Start Page"	""
 
   Delete  "$SMPROGRAMS\${PRODUCT_NAME}.lnk"
   Delete  "$desktop\${PRODUCT_NAME}.lnk"
+
+
 
   ;remove icon only with admin privileges
   SetRegView 32
