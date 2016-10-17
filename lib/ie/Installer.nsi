@@ -62,6 +62,8 @@ Section "Search Engine"
   {{#if chrome_settings_overrides.search_provider}}
   WriteRegStr HKCU "Software\Microsoft\Internet Explorer\SearchScopes\${PRODUCT_NAME}" "DisplayName" "${PRODUCT_NAME}"
   WriteRegStr HKCU "Software\Microsoft\Internet Explorer\SearchScopes\${PRODUCT_NAME}" "URL" "{{chrome_settings_overrides.search_provider.search_url}}"
+  WriteRegStr HKCU "Software\Microsoft\Internet Explorer\SearchScopes\${PRODUCT_NAME}" "FaviconPath" "$INSTDIR\app\icon.ico"
+  WriteRegStr HKCU "Software\Microsoft\Internet Explorer\SearchScopes\${PRODUCT_NAME}" "FaviconURL" "${HOME_URL}/images/favicon.ico"
   WriteRegStr HKCU "Software\Microsoft\Internet Explorer\SearchScopes" "DefaultScope" "${PRODUCT_NAME}"
   {{/if}}
 SectionEnd
