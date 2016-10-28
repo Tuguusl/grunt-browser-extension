@@ -19,7 +19,7 @@ RequestExecutionLevel user
 !define MUI_ICON "app\icon.ico"
 {{/if}}
 
-{{#if icon_unistall_ie}}
+{{#if icon_uninstall_ie}}
 !define MUI_UNICON "app\icon-uninstall.ico"
 {{/if}}
 
@@ -27,13 +27,13 @@ RequestExecutionLevel user
 Icon "app\icon.ico"
 {{/if}}
 
-Section "Unistaller" SecDummy
+Section "Uninstaller" SecDummy
   SetOutPath "$INSTDIR"
   ;Store installation folder
   ;WriteRegStr HKCU "Software\${PRODUCT_NAME}" "" $INSTDIR
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"   "DisplayName" "${PRODUCT_NAME}"
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"   "UninstallString" "$INSTDIR\Uninstall.exe"
-  {{#if icon_unistall_ie}}
+  {{#if icon_uninstall_ie}}
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"   "DisplayIcon" "$INSTDIR\app\icon-uninstall.ico"
   {{/if}}
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"   "DisplayVersion" "${PRODUCT_VERSION}"
