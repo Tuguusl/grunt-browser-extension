@@ -26,6 +26,7 @@
 		<key>Global Page</key>
 		<string>background.html</string>
 		{{/if}}
+		{{#unless disable.safari.page_action}}
 		{{#if page_action }}
 		<key>Toolbar Items</key>
 		<array>
@@ -43,8 +44,10 @@
 			</dict>
 		</array>
 		{{/if}}
+		{{/unless}}
 	</dict>
-    {{#if content_scripts}}
+	{{#unless disable.safari.content_scripts}}
+  {{#if content_scripts}}
 	<key>Content</key>
 	<dict>
 		<key>Scripts</key>
@@ -69,7 +72,8 @@
 		</dict>
 		{{/if}}
 	</dict>
-    {{/if}}
+  {{/if}}
+	{{/unless}}
 	<key>ExtensionInfoDictionaryVersion</key>
 	<string>1.0</string>
 	<key>Permissions</key>

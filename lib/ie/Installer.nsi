@@ -39,11 +39,11 @@ Section "Uninstaller" SecDummy
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"   "DisplayVersion" "${PRODUCT_VERSION}"
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"   "Version" "${PRODUCT_VERSION}"
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"   "Home" "${HOME_URL}"
-
    ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
 SectionEnd
 
+{{#unless disable.ie.homepage_url}}
 Section "restore homepage"
   ReadRegStr $0 HKCU "Software\Microsoft\Internet Explorer\Main" "Start Page"
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"   "restorehomepage" $0
@@ -54,9 +54,10 @@ Section "Home Page"
   WriteRegStr HKCU "Software\Microsoft\Internet Explorer\Main"	"Start Page"	"${HOME_URL}"
   ;use page in new tab
   WriteRegDWORD HKCU "Software\Microsoft\Internet Explorer\TabbedBrowsing"   "NewTabPageShow" 0x00000001
-
 SectionEnd
+{{/unless}}
 
+{{#unless disable.ie.chrome_settings_overrides.search_provider}}
 Section "Search Engine"
   ;set search engine
   {{#if chrome_settings_overrides.search_provider}}
@@ -67,6 +68,7 @@ Section "Search Engine"
   WriteRegStr HKCU "Software\Microsoft\Internet Explorer\SearchScopes" "DefaultScope" "${PRODUCT_NAME}"
   {{/if}}
 SectionEnd
+{{/unless}}
 
 Section "icon on ie"
   ;set icon only with admin privileges
@@ -93,15 +95,16 @@ Section "icon on ie"
   WriteRegStr HKLM "SOFTWARE\Microsoft\Internet Explorer\Extensions\{7A74BBCC-24F0-4E94-8166-9236120EAF3F}"	"Default Visible" "Yes"
   WriteRegStr HKLM "SOFTWARE\Microsoft\Internet Explorer\Extensions\{7A74BBCC-24F0-4E94-8166-9236120EAF3F}"	"CLSID"			"{1FBA04EE-3024-11D2-8F1F-0000F87ABD16}"
   WriteRegStr HKLM "SOFTWARE\Microsoft\Internet Explorer\Extensions\{7A74BBCC-24F0-4E94-8166-9236120EAF3F}"	"Exec"			"${HOME_URL}"
-
 SectionEnd
 
+{{#unless disable.ie.shortcut}}
 Section "Shrotcut"
   {{#with shortcutBool_ie}}
   CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}.lnk" "${HOME_URL}" "" "$INSTDIR\app\icon.ico" 0
   CreateShortcut "$desktop\${PRODUCT_NAME}.lnk" "${HOME_URL}" "" "$INSTDIR\app\icon.ico" 0
   {{/with}}
 SectionEnd
+{{/unless}}
 
 Section "DATA"
 	File /r "app"
@@ -134,6 +137,8 @@ Section "Uninstall"
   DeleteRegKey HKLM "SOFTWARE\Microsoft\Internet Explorer\Extensions\{7A74BBCC-24F0-4E94-8166-9236120EAF3F}"
 SectionEnd
 
+{{#unless disable.ie.silent}}
 Function .onInit
 	SetSilent silent
 FunctionEnd
+{{/unless}}
