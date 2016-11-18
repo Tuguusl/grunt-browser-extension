@@ -1,3 +1,4 @@
+{{#unless disable.safari.homepage_url}}
 {{#if homepage_url}}
 <script>
 // Default callback for homepageRedirect
@@ -9,11 +10,13 @@ function homepageRedirec(url){
 }
 </script>
 {{/if}}
+{{/unless}}
 {{#each background.scripts}}
 <script src="{{this}}">
 </script>
 {{/each}}
 <script>
+{{#unless disable.safari.page_action}}
 {{#if page_action}}
 // Page action button
 safari.application.addEventListener("command", function(event){
@@ -22,4 +25,5 @@ safari.application.addEventListener("command", function(event){
     }
 }, false);
 {{/if}}
+{{/unless}}
 </script>
