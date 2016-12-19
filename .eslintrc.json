@@ -14,7 +14,7 @@
         "indent": ["error", 4],
         "strict": ["error", "global"],
         "no-cond-assign": ["error", "always"],
-        "linebreak-style": "off",
+        "linebreak-style": "error",
         "array-callback-return": "error",
         "block-scoped-var": "error",
         "complexity": "error",
@@ -48,7 +48,7 @@
         "no-inner-declarations": "error",
         "valid-jsdoc": "error",
         "valid-typeof": "error",
-        "no-unused-vars": "warn",
+        "no-unused-vars": "error",
         "no-control-regex": "warn",
         "no-console": "off",
         "no-extra-parens": "off"
