@@ -202,6 +202,7 @@ browserExtension.prototype._copyFiles = function(applicationDir, files) {
             cwd: applicationDir
         }, file).forEach(function(fileName) {
             if (grunt.file.isDir(applicationDir + '/' + fileName)) {
+                grunt.file.mkdir('build/' + self.target + '/WebExtensions/' + fileName);
                 grunt.file.mkdir('build/' + self.target + '/chrome/' + fileName);
                 grunt.file.mkdir('build/' + self.target + '/opera/' + fileName);
                 grunt.file.mkdir('build/' + self.target + '/firefox/data/' + fileName);
@@ -209,6 +210,7 @@ browserExtension.prototype._copyFiles = function(applicationDir, files) {
             } else {
                 var options_file = {encoding: null};
                 var tmp_file_content = grunt.file.read(applicationDir + '/' + fileName, options_file);
+                grunt.file.write('build/' + self.target + '/WebExtensions/' + fileName, tmp_file_content, options_file);
                 grunt.file.write('build/' + self.target + '/chrome/' + fileName, tmp_file_content, options_file);
                 grunt.file.write('build/' + self.target + '/opera/' + fileName, tmp_file_content, options_file);
                 grunt.file.write('build/' + self.target + '/firefox/data/' + fileName, tmp_file_content, options_file);
