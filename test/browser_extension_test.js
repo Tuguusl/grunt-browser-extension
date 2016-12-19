@@ -15,7 +15,8 @@ exports.browser_extension = {
         done();
     },
     test_directories_builded: function(test) {
-        test.expect(5);
+        test.expect(6);
+        test.ok(grunt.file.isDir('build/default/WebExtensions'));
         test.ok(grunt.file.isDir('build/default/chrome'));
         test.ok(grunt.file.isDir('build/default/firefox'));
         test.ok(grunt.file.isDir('build/default/default.safariextension'));
@@ -24,7 +25,9 @@ exports.browser_extension = {
         test.done();
     },
     test_files_builded: function(test) {
-        test.expect(6);
+        test.expect(8);
+        test.ok(grunt.file.isFile('build/default/WebExtensions/manifest.json'));
+        test.ok(grunt.file.isFile('build/default/chrome/manifest.json'));
         test.ok(grunt.file.isFile('build/default/firefox/com.browser.extension.xpi'));
         test.ok(grunt.file.isFile('build/default/ie/setup.exe'));
         test.ok(grunt.file.isFile('build/default/default.safariextension/Info.plist'));
@@ -34,7 +37,8 @@ exports.browser_extension = {
         test.done();
     },
     test_icons_builded: function(test) {
-        test.expect(4);
+        test.expect(5);
+        test.equal(check_image('build/default/WebExtensions/icon.png'), 0);
         test.equal(check_image('build/default/chrome/icon.png'), 0);
         test.equal(check_image('build/default/firefox/data/icon.png'), 0);
         test.equal(check_image('build/default/default.safariextension/icon.png'), 0);

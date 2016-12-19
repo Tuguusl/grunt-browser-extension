@@ -39,6 +39,9 @@ var browserExtension = function(root, options, target) {
     this.options = options;
     this.target = target;
     this.browserFiles = {
+        WebExtensions: [
+            'manifest.json'
+        ],
         chrome: [
             'manifest.json'
         ],
@@ -56,6 +59,7 @@ var browserExtension = function(root, options, target) {
         ]
     };
     this.browserDestineFiles = {
+        WebExtensions: 'WebExtensions',
         chrome: 'chrome',
         opera: 'opera',
         firefox: path.join('firefox', 'data'),
