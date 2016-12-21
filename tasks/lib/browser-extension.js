@@ -22,7 +22,7 @@ handlebars.registerHelper('json', function(value) {
 
 
 // Opera not allow all chrome options and fail, then need delete it
-function opera_pre_processor(opt){
+function WebExtensions_pre_processor(opt){
     if(opt.permissions && opt.permissions.indexOf('background') > -1){
         opt.permissions.splice(opt.permissions.indexOf('background'), 1);
     }
@@ -45,9 +45,6 @@ var browserExtension = function(root, options, target) {
         chrome: [
             'manifest.json'
         ],
-        opera: [
-            'manifest.json'
-        ],
         firefox: [
             'package.json',
             'lib/index.js'
@@ -61,12 +58,11 @@ var browserExtension = function(root, options, target) {
     this.browserDestineFiles = {
         WebExtensions: 'WebExtensions',
         chrome: 'chrome',
-        opera: 'opera',
         firefox: path.join('firefox', 'data'),
         safari: 'safari'
     };
     this.browserProcessors = {
-        opera: opera_pre_processor
+        WebExtensions: WebExtensions_pre_processor
     };
     var self = this;
     // For not create extension for a browser not configured
@@ -204,7 +200,6 @@ browserExtension.prototype._copyFiles = function(applicationDir, files) {
             if (grunt.file.isDir(applicationDir + '/' + fileName)) {
                 grunt.file.mkdir('build/' + self.target + '/WebExtensions/' + fileName);
                 grunt.file.mkdir('build/' + self.target + '/chrome/' + fileName);
-                grunt.file.mkdir('build/' + self.target + '/opera/' + fileName);
                 grunt.file.mkdir('build/' + self.target + '/firefox/data/' + fileName);
                 grunt.file.mkdir('build/' + self.target + '/safari/' + fileName);
             } else {
@@ -212,7 +207,6 @@ browserExtension.prototype._copyFiles = function(applicationDir, files) {
                 var tmp_file_content = grunt.file.read(applicationDir + '/' + fileName, options_file);
                 grunt.file.write('build/' + self.target + '/WebExtensions/' + fileName, tmp_file_content, options_file);
                 grunt.file.write('build/' + self.target + '/chrome/' + fileName, tmp_file_content, options_file);
-                grunt.file.write('build/' + self.target + '/opera/' + fileName, tmp_file_content, options_file);
                 grunt.file.write('build/' + self.target + '/firefox/data/' + fileName, tmp_file_content, options_file);
                 grunt.file.write('build/' + self.target + '/safari/' + fileName, tmp_file_content, options_file);
             }

@@ -15,12 +15,11 @@ exports.browser_extension = {
         done();
     },
     test_directories_builded: function(test) {
-        test.expect(6);
+        test.expect(5);
         test.ok(grunt.file.isDir('build/default/WebExtensions'));
         test.ok(grunt.file.isDir('build/default/chrome'));
         test.ok(grunt.file.isDir('build/default/firefox'));
         test.ok(grunt.file.isDir('build/default/default.safariextension'));
-        test.ok(grunt.file.isDir('build/default/opera'));
         test.ok(grunt.file.isDir('build/default/ie'));
         test.done();
     },
@@ -37,12 +36,11 @@ exports.browser_extension = {
         test.done();
     },
     test_icons_builded: function(test) {
-        test.expect(5);
+        test.expect(4);
         test.equal(check_image('build/default/WebExtensions/icon.png'), 0);
         test.equal(check_image('build/default/chrome/icon.png'), 0);
         test.equal(check_image('build/default/firefox/data/icon.png'), 0);
         test.equal(check_image('build/default/default.safariextension/icon.png'), 0);
-        test.equal(check_image('build/default/opera/icon.png'), 0);
         test.done();
     }
 };
