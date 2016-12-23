@@ -9,7 +9,6 @@
 
 var grunt;
 var util = require('util');
-var fs = require('fs-extra');
 var path = require('path');
 var shell = require('shelljs');
 var handlebars = require('handlebars');
@@ -238,7 +237,9 @@ browserExtension.prototype._makeIcons = function(icon) {
         grunt.fail.fatal('Your icon is: ' + options.height + 'px x ' + options.width + 'px');
     }
     var sizes = [16, 48, 64, 128, 256];
-    fs.mkdir(tmp_dir);
+    if(!grunt.file.exists(tmp_dir)){
+        grunt.file.mkdir(tmp_dir);
+    }
     shell.cp(icon, path.join(tmp_dir, 'icon.png'));
     sizes.forEach(function(size) {
         var resizeArgs = [
@@ -262,7 +263,9 @@ browserExtension.prototype.build = function() {
         silent: true
     };
     var result = 0;
-    fs.mkdir(tmp_dir);
+    if(!grunt.file.exists(tmp_dir)){
+        grunt.file.mkdir(tmp_dir);
+    }
     // Building Firefox extension
     var currentDir = shell.pwd();
     shell.cd('build/' + this.target + '/firefox/');
