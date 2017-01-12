@@ -32,7 +32,7 @@
 
     {{#unless disable.chrome.oauth2}}
     {{#if oauth2}}
-    "permissions": {{json oauth2}},
+    "oauth2": {{json oauth2}},
     {{/if}}
     {{/unless}}
 
