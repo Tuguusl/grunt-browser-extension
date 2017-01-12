@@ -29,6 +29,13 @@
     "permissions": {{json permissions}},
     {{/if}}
     {{/unless}}
+
+    {{#unless disable.chrome.oauth2}}
+    {{#if oauth2}}
+    "permissions": {{json oauth2}},
+    {{/if}}
+    {{/unless}}
+
     {{#unless disable.chrome.web_accessible_resources}}
     {{#if web_accessible_resources}}
     "web_accessible_resources": {{json web_accessible_resources}},
