@@ -4,60 +4,59 @@
     "version": "{{{version}}}",
     "description": "{{{description}}}",
     "author": "{{{author}}}",
-    {{#unless disable.chrome.content_scripts}}
+    {{#unless disable.WebExtensions.content_scripts}}
     {{#if content_scripts}}
-    "content_scripts": [{
-        {{#if content_scripts.js}}
-        "js": {{json content_scripts.js}},
-        {{/if}}
-        {{#if content_scripts.css}}
-        "css": {{json content_scripts.css}},
-        {{/if}}
-        "matches": ["http://{{{host}}}/*", "https://{{{host}}}/*"]
-    }],
+    "content_scripts": {{json content_scripts}},
     {{/if}}
     {{/unless}}
-    {{#unless disable.chrome.homepage_url}}
+    {{#unless disable.WebExtensions.homepage_url}}
     {{#if homepage_url}}
     "homepage_url": "{{{homepage_url}}}",
     {{/if}}
     {{/unless}}
-    {{#unless disable.chrome.background}}
+    {{#unless disable.WebExtensions.background}}
     {{#if background}}
     "background": {{json background}},
     {{/if}}
     {{/unless}}
-    {{#unless disable.chrome.content_security_policy}}
+    {{#unless disable.WebExtensions.content_security_policy}}
     {{#if content_security_policy}}
     "content_security_policy": "{{{content_security_policy}}}",
     {{/if}}
     {{/unless}}
-    {{#unless disable.chrome.permissions}}
+    {{#unless disable.WebExtensions.permissions}}
     {{#if permissions}}
     "permissions": {{json permissions}},
     {{/if}}
     {{/unless}}
-    {{#unless disable.chrome.web_accessible_resources}}
+
+    {{#unless disable.WebExtensions.oauth2}}
+    {{#if oauth2}}
+    "permissions": {{json oauth2}},
+    {{/if}}
+    {{/unless}}
+
+    {{#unless disable.WebExtensions.web_accessible_resources}}
     {{#if web_accessible_resources}}
     "web_accessible_resources": {{json web_accessible_resources}},
     {{/if}}
     {{/unless}}
-    {{#unless disable.chrome.browser_action}}
+    {{#unless disable.WebExtensions.browser_action}}
     {{#if browser_action}}
     "browser_action": {{json browser_action}},
     {{/if}}
     {{/unless}}
-    {{#unless disable.chrome.chrome_url_overrides}}
+    {{#unless disable.WebExtensions.chrome_url_overrides}}
     {{#if chrome_url_overrides}}
     "chrome_url_overrides": {{json chrome_url_overrides}},
     {{/if}}
     {{/unless}}
-    {{#unless disable.chrome.chrome_settings_overrides}}
-    {{#if chrome_settings_overrides}}
+    {{#unless disable.WebExtensions.chrome_settings_overrides}}
+    {{#if chrome_settings_overrides}}{{#if homepage_url}}
     "chrome_settings_overrides": {{json chrome_settings_overrides}},
-    {{/if}}
+    {{/if}}{{/if}}
     {{/unless}}
-    {{#unless disable.chrome.omnibox}}
+    {{#unless disable.WebExtensions.omnibox}}
     {{#if omnibox.keyword}}
     "omnibox": {
         "keyword": "{{omnibox.keyword}}"

@@ -9,7 +9,6 @@
 
 var grunt;
 var util = require('util');
-var fs = require('fs-extra');
 var path = require('path');
 var shell = require('shelljs');
 var handlebars = require('handlebars');
@@ -22,7 +21,7 @@ handlebars.registerHelper('json', function(value) {
 
 
 // Opera not allow all chrome options and fail, then need delete it
-function opera_pre_processor(opt){
+function WebExtensions_pre_processor(opt){
     if(opt.permissions && opt.permissions.indexOf('background') > -1){
         opt.permissions.splice(opt.permissions.indexOf('background'), 1);
     }
@@ -45,9 +44,6 @@ var browserExtension = function(root, options, target) {
         chrome: [
             'manifest.json'
         ],
-        opera: [
-            'manifest.json'
-        ],
         firefox: [
             'package.json',
             'lib/index.js'
@@ -61,12 +57,11 @@ var browserExtension = function(root, options, target) {
     this.browserDestineFiles = {
         WebExtensions: 'WebExtensions',
         chrome: 'chrome',
-        opera: 'opera',
         firefox: path.join('firefox', 'data'),
         safari: 'safari'
     };
     this.browserProcessors = {
-        opera: opera_pre_processor
+        WebExtensions: WebExtensions_pre_processor
     };
     var self = this;
     // For not create extension for a browser not configured
@@ -202,15 +197,15 @@ browserExtension.prototype._copyFiles = function(applicationDir, files) {
             cwd: applicationDir
         }, file).forEach(function(fileName) {
             if (grunt.file.isDir(applicationDir + '/' + fileName)) {
+                grunt.file.mkdir('build/' + self.target + '/WebExtensions/' + fileName);
                 grunt.file.mkdir('build/' + self.target + '/chrome/' + fileName);
-                grunt.file.mkdir('build/' + self.target + '/opera/' + fileName);
                 grunt.file.mkdir('build/' + self.target + '/firefox/data/' + fileName);
                 grunt.file.mkdir('build/' + self.target + '/safari/' + fileName);
             } else {
                 var options_file = {encoding: null};
                 var tmp_file_content = grunt.file.read(applicationDir + '/' + fileName, options_file);
+                grunt.file.write('build/' + self.target + '/WebExtensions/' + fileName, tmp_file_content, options_file);
                 grunt.file.write('build/' + self.target + '/chrome/' + fileName, tmp_file_content, options_file);
-                grunt.file.write('build/' + self.target + '/opera/' + fileName, tmp_file_content, options_file);
                 grunt.file.write('build/' + self.target + '/firefox/data/' + fileName, tmp_file_content, options_file);
                 grunt.file.write('build/' + self.target + '/safari/' + fileName, tmp_file_content, options_file);
             }
@@ -242,7 +237,9 @@ browserExtension.prototype._makeIcons = function(icon) {
         grunt.fail.fatal('Your icon is: ' + options.height + 'px x ' + options.width + 'px');
     }
     var sizes = [16, 48, 64, 128, 256];
-    fs.mkdir(tmp_dir);
+    if(!grunt.file.exists(tmp_dir)){
+        grunt.file.mkdir(tmp_dir);
+    }
     shell.cp(icon, path.join(tmp_dir, 'icon.png'));
     sizes.forEach(function(size) {
         var resizeArgs = [
@@ -266,7 +263,9 @@ browserExtension.prototype.build = function() {
         silent: true
     };
     var result = 0;
-    fs.mkdir(tmp_dir);
+    if(!grunt.file.exists(tmp_dir)){
+        grunt.file.mkdir(tmp_dir);
+    }
     // Building Firefox extension
     var currentDir = shell.pwd();
     shell.cd('build/' + this.target + '/firefox/');

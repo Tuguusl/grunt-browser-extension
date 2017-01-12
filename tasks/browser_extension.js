@@ -71,6 +71,6 @@ module.exports = function (grunt) {
         grunt.verbose.ok('NSIS installer for IE builded');
 
         browserExt.build();
-        grunt.verbose.ok('Extensions builded');
+        grunt.log.ok('Extensions builded');
     });
 };
