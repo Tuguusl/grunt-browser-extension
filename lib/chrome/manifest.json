@@ -6,7 +6,15 @@
     "author": "{{{author}}}",
     {{#unless disable.chrome.content_scripts}}
     {{#if content_scripts}}
-    "content_scripts": {{json content_scripts}},
+    "content_scripts": [{{#each content_scripts}}{
+        {{#if this.js}}
+        "js": {{json this.js}},
+        {{/if}}
+        {{#if this.css}}
+        "css": {{json this.css}},
+        {{/if}}
+        "matches": ["http://{{{../host}}}/*", "https://{{{../host}}}/*"]
+    }{{/each}}],
     {{/if}}
     {{/unless}}
     {{#unless disable.chrome.homepage_url}}
