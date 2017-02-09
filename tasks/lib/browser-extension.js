@@ -18,6 +18,15 @@ var handlebars = require('handlebars');
 handlebars.registerHelper('json', function(value) {
     return new handlebars.SafeString(JSON.stringify(value));
 });
+handlebars.registerHelper('ifEnabled', function(feature, options){
+    console.log(feature);
+    console.log(this);
+    if(feature && this.browser && this.browser.name && this.disable && this.disable[this.browser.name] && this.disable[this.browser.name][feature]){
+        return options.inverse(this);
+    } else {
+        return options.fn(this);
+    }
+});
 
 
 // Opera not allow all chrome options and fail, then need delete it
