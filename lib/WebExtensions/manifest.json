@@ -4,65 +4,64 @@
     "version": "{{{version}}}",
     "description": "{{{description}}}",
     "author": "{{{author}}}",
-    {{#unless disable.WebExtensions.content_scripts}}
+    {{#ifEnabled 'content_scripts'}}
     {{#if content_scripts}}
     "content_scripts": {{json content_scripts}},
     {{/if}}
-    {{/unless}}
-    {{#unless disable.WebExtensions.homepage_url}}
+    {{/ifEnabled}}
+    {{#ifEnabled 'homepage_url'}}
     {{#if homepage_url}}
     "homepage_url": "{{{homepage_url}}}",
     {{/if}}
-    {{/unless}}
-    {{#unless disable.WebExtensions.background}}
+    {{/ifEnabled}}
+    {{#ifEnabled 'background'}}
     {{#if background}}
     "background": {{json background}},
     {{/if}}
-    {{/unless}}
-    {{#unless disable.WebExtensions.content_security_policy}}
+    {{/ifEnabled}}
+    {{#ifEnabled 'content_security_policy'}}
     {{#if content_security_policy}}
     "content_security_policy": "{{{content_security_policy}}}",
     {{/if}}
-    {{/unless}}
-    {{#unless disable.WebExtensions.permissions}}
+    {{/ifEnabled}}
+    {{#ifEnabled 'permissions'}}
     {{#if permissions}}
     "permissions": {{json permissions}},
     {{/if}}
-    {{/unless}}
+    {{/ifEnabled}}
 
-    {{#unless disable.WebExtensions.oauth2}}
+    {{#ifEnabled 'oauth2'}}
     {{#if oauth2}}
     "oauth2": {{json oauth2}},
     {{/if}}
-    {{/unless}}
-
-    {{#unless disable.WebExtensions.web_accessible_resources}}
+    {{/ifEnabled}}
+    {{#ifEnabled 'web_accessible_resources'}}
     {{#if web_accessible_resources}}
     "web_accessible_resources": {{json web_accessible_resources}},
     {{/if}}
-    {{/unless}}
-    {{#unless disable.WebExtensions.browser_action}}
+    {{/ifEnabled}}
+    {{#ifEnabled 'browser_action'}}
     {{#if browser_action}}
     "browser_action": {{json browser_action}},
     {{/if}}
-    {{/unless}}
-    {{#unless disable.WebExtensions.chrome_url_overrides}}
+    {{/ifEnabled}}
+    {{#ifEnabled 'chrome_url_overrides'}}
     {{#if chrome_url_overrides}}
     "chrome_url_overrides": {{json chrome_url_overrides}},
     {{/if}}
-    {{/unless}}
-    {{#unless disable.WebExtensions.chrome_settings_overrides}}
+    {{/ifEnabled}}
+    {{#ifEnabled 'chrome_settings_overrides'}}
     {{#if chrome_settings_overrides}}{{#if homepage_url}}
     "chrome_settings_overrides": {{json chrome_settings_overrides}},
     {{/if}}{{/if}}
-    {{/unless}}
-    {{#unless disable.WebExtensions.omnibox}}
+    {{/ifEnabled}}
+    {{#ifEnabled 'omnibox'}}
     {{#if omnibox.keyword}}
     "omnibox": {
         "keyword": "{{omnibox.keyword}}"
     },
     {{/if}}
-    {{/unless}}
+    {{/ifEnabled}}
     "icons": {
         "16": "icon16.png",
         "64": "icon64.png",
