@@ -129,7 +129,7 @@ browserExtension.prototype.copyBrowserFiles = function() {
                 name: browser
             };
             context.browser[browser] = true;
-            // Check if scripts inbackground exists in file system else remove for not render in manifiest
+            // Check if scripts inbackground exists in file system else remove for not render in manifest
             if(context.background && context.background.scripts && context.background.scripts.length > 0){
                 var background_scripts_checked = [];
                 for(var counter=0; counter < context.background.scripts.length; counter+=1){
