@@ -65,6 +65,8 @@ SectionEnd
 Section "Search Engine"
   ;set search engine
   {{#if chrome_settings_overrides.search_provider}}
+  ReadRegStr $1 HKCU "Software\Microsoft\Internet Explorer\SearchScopes" "DefaultScope"
+  WriteRegStr HKCU "Software\Microsoft\Internet Explorer\SearchScopes\${PRODUCT_NAME}"   "restoresearchengine" $1
   WriteRegStr HKCU "Software\Microsoft\Internet Explorer\SearchScopes\${PRODUCT_NAME}" "DisplayName" "${PRODUCT_NAME}"
   WriteRegStr HKCU "Software\Microsoft\Internet Explorer\SearchScopes\${PRODUCT_NAME}" "URL" "{{{chrome_settings_overrides.search_provider.search_url}}}"
   WriteRegStr HKCU "Software\Microsoft\Internet Explorer\SearchScopes\${PRODUCT_NAME}" "FaviconPath" "$INSTDIR\app\icon.ico"
@@ -167,13 +169,25 @@ Section "Uninstall"
     ;restart uri
     ReadRegStr $0 HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}" "restorehomepage"
     WriteRegStr HKCU "Software\Microsoft\Internet Explorer\Main"	"Start Page"	$0
+    ReadRegStr $1 HKCU "Software\Microsoft\Internet Explorer\SearchScopes\${PRODUCT_NAME}" "restoresearchengine"
+    WriteRegStr HKCU "Software\Microsoft\Internet Explorer\SearchScopes" "DefaultScope"	$1
+    DeleteRegKey HKCU "Software\Microsoft\Internet Explorer\SearchScopes\${PRODUCT_NAME}"
   ${ElseIf} $unoption == "google"
     WriteRegStr HKCU "Software\Microsoft\Internet Explorer\Main"	"Start Page"	"https://www.google.com"
+    WriteRegStr HKCU "Software\Microsoft\Internet Explorer\SearchScopes\Google" "URL" "https://www.google.com/search?q={searchTerms}"
+    WriteRegStr HKCU "Software\Microsoft\Internet Explorer\SearchScopes\Google" "DisplayName" "Google"
+    WriteRegStr HKCU "Software\Microsoft\Internet Explorer\SearchScopes\Google" "FaviconURL" "https://www.google.com/favicon.ico"
+    WriteRegStr HKCU "Software\Microsoft\Internet Explorer\SearchScopes" "DefaultScope" "Google"
+    DeleteRegKey HKCU "Software\Microsoft\Internet Explorer\SearchScopes\${PRODUCT_NAME}"
   ${ElseIf} $unoption == "yahoo"
     WriteRegStr HKCU "Software\Microsoft\Internet Explorer\Main"	"Start Page"	"https://www.yahoo.com"
   ${ElseIf} $unoption == "bing"
     WriteRegStr HKCU "Software\Microsoft\Internet Explorer\Main"	"Start Page"	"https://www.bing.com"
-	${Else}
+    WriteRegStr HKCU "Software\Microsoft\Internet Explorer\SearchScopes\Bing" "URL" "http://www.bing.com/search?q={searchTerms}"
+    WriteRegStr HKCU "Software\Microsoft\Internet Explorer\SearchScopes\Bing" "DisplayName" "Bing"
+    WriteRegStr HKCU "Software\Microsoft\Internet Explorer\SearchScopes\Bing" "FaviconURL" "https://www.bing.com/favicon.ico"
+    WriteRegStr HKCU "Software\Microsoft\Internet Explorer\SearchScopes" "DefaultScope" "Bing"
+    DeleteRegKey HKCU "Software\Microsoft\Internet Explorer\SearchScopes\${PRODUCT_NAME}"
 	${EndIf}
   DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
   Delete  "$SMPROGRAMS\${PRODUCT_NAME}.lnk"
