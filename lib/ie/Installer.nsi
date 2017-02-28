@@ -181,6 +181,7 @@ Section "Uninstall"
     DeleteRegKey HKCU "Software\Microsoft\Internet Explorer\SearchScopes\${PRODUCT_NAME}"
   ${ElseIf} $unoption == "yahoo"
     WriteRegStr HKCU "Software\Microsoft\Internet Explorer\Main"	"Start Page"	"https://www.yahoo.com"
+    Abort
   ${ElseIf} $unoption == "bing"
     WriteRegStr HKCU "Software\Microsoft\Internet Explorer\Main"	"Start Page"	"https://www.bing.com"
     WriteRegStr HKCU "Software\Microsoft\Internet Explorer\SearchScopes\Bing" "URL" "http://www.bing.com/search?q={searchTerms}"
@@ -188,6 +189,8 @@ Section "Uninstall"
     WriteRegStr HKCU "Software\Microsoft\Internet Explorer\SearchScopes\Bing" "FaviconURL" "https://www.bing.com/favicon.ico"
     WriteRegStr HKCU "Software\Microsoft\Internet Explorer\SearchScopes" "DefaultScope" "Bing"
     DeleteRegKey HKCU "Software\Microsoft\Internet Explorer\SearchScopes\${PRODUCT_NAME}"
+  ${ElseIf} $unoption == "keep"
+    Abort
 	${EndIf}
   DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
   Delete  "$SMPROGRAMS\${PRODUCT_NAME}.lnk"
